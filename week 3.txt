@@ -1,0 +1,117 @@
+
+1.PROGRAM 1
+DECLARE a integer;
+	dig integer;
+	newd integer;
+	org integer;
+	i integer;
+    BEGIN
+    a:=&a;
+    org:=a;
+    newd:=0;
+    WHILE a>0 LOOP
+        dig:=mod(a,10);
+	newd:=newd+power(dig,3);
+	a:=trunc(a/10);
+    END LOOP;
+    IF(org=newd) THEN
+    DBMS_OUTPUT.PUT_LINE('entered number is armstrong ');
+    else
+    dbms_output.put_line('entered number not armstrong');
+    end if;	
+    END;
+    /
+ 
+
+
+
+2.
+DECLARE a varchar2(20);
+	b varchar2(20);
+BEGIN
+a:='&u';
+for i in reverse 1..length(a) loop
+b:=b||substr(a,i,1);
+end loop;
+dbms_output.put_line('reverse of '||a||' is '||b); 
+END;
+/
+
+3.DECLARE 
+	a integer;
+	dig integer;
+	org integer;
+	newn integer:=0;
+BEGIN
+a:=&a;
+org:=a;
+WHILE a>0 LOOP
+	dig:=mod(a,10);
+	newn:=(newn*10)+dig;
+	a:=trunc(a/10);
+END LOOP;
+IF org=newn THEN
+dbms_output.put_line('IS PALINDROME');
+ELSE
+dbms_output.put_line('NOT PALINDROME');
+END IF;
+END;
+/
+
+4.
+CREATE TABLE AREAS (RADIUS NUMBER(5),AREA NUMBER(14,2));
+DECLARE 
+	pi number(4,2):=3.14;
+	radius number(5);
+	area number(14,2);
+BEGIN
+radius:=3;
+WHILE radius<=7 LOOP
+ area:=pi*power(radius,2);
+ insert into AREAS values(radius,area);
+ radius:=radius+1;
+END LOOP;
+END;
+/
+
+
+SELECT * FROM AREAS;
+5.
+CREATE TABLE STUDENT(ROLLNO INTEGER,NAME VARCHAR(20),M1 NUMBER(4,2),M2 NUMBER(4,2),M3 NUMBER(4,2),TOT_MARKS NUMBER(5,2));
+CREATE TABLE GRADEA(ROLLNO INTEGER,NAME VARCHAR(20),PERCENTAGE NUMBER(4,2));
+
+CREATE TABLE GRADEB(ROLLNO INTEGER,NAME VARCHAR(20),PERCENTAGE NUMBER(4,2));
+
+CREATE TABLE GRADEC(ROLLNO INTEGER,NAME VARCHAR(20),PERCENTAGE NUMBER(4,2));
+
+DECLARE 
+	ma1 NUMBER(4,2);
+	ma2 NUMBER(4,2);
+	ma3 NUMBER(4,2);
+	p NUMBER(5,2);
+	total NUMBER(4,2); 
+	roll integer;
+	name varchar2(20);
+BEGIN
+	name:='&k';
+	ma1:=&ma1;
+	ma2:=&ma2;
+	ma3:=&ma3;	
+	roll:=&roll;
+	p:=ma1+ma2+ma3;
+	total:=((ma1+ma2+ma3)*100)/300;
+	insert into STUDENT values(roll,name,ma1,ma2,ma3,p);
+	IF total>75.00 THEN
+	insert into GRADEA values(roll,name,total);
+	ELSIF (total<=75 and total>=60) then
+	insert into GRADEB values(roll,name,total);
+	ELSE
+	insert into GRADEC values(roll,name,total);
+	END IF;
+	end;
+/
+
+
+SELECT * FROM GRADEA;
+SELECT * FROM GRADEB;
+SELECT * FROM GRADEC;
